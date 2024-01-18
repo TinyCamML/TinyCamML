@@ -20,8 +20,8 @@ enum State {
 };
 State state = DATALOG_STATE;
 
-// Define whether (1) or not (0) to publish
-#define PUBLISHING 1
+// Define whether (1) or not (0) to publish (PJB: redefining to 0 for initial testing sans cell)
+#define PUBLISHING 0
 
 unsigned long stateTime = 0;
 char data[120];
@@ -69,12 +69,13 @@ void loop(void) {
 
             delay(1000);
 
-            Serial.println(Serial1.readString());
+            Serial.println(Serial1.readString()); //PJB: this doesn't "return" the answer, it just prints it to serial monitor. Therefore you won't be able to access it for publishing.
 
         //delay(3000);
 
             digitalWrite(A0, HIGH);
 
+          //PJB: move sleep code to your sleep state.
             config.mode(SystemSleepMode::ULTRA_LOW_POWER)
             .gpio(A0, FALLING)
             .duration(60* 1000L); // Set seconds until wake    
@@ -84,6 +85,7 @@ void loop(void) {
     float stateOfCharge = batteryMonitor.getSoC();
     real_time = Time.now();
 
+      // PJB: try to predict what this will save to the data variable. Is a "flood" or "no flood" response anywhere here? 
     snprintf(data, sizeof(data), "%li,%.5f,%.02f,%.02f", //,%.5f,%.5f,%.5f,%.5f,%.5f,%.02f,%.02f",
       real_time, // if it takes a while to connect, this time could be offset from sensor recording
       cellVoltage, stateOfCharge
@@ -147,11 +149,12 @@ void loop(void) {
 
 //Ready to sleep
     case SLEEP_STATE:{
+      // PJB: move your config details from above down to here
         SystemSleepResult result = System.sleep(config); // Device sleeps here
     
     }
         
-
+//PJB: integrate this soon. You currently have your sleep timing hard-coded. The following code will give you more robust timing.
      //int secondsUntilNextEvent() {
 
          //int current_seconds = Time.now();
