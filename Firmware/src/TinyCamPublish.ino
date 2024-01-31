@@ -1,4 +1,5 @@
-
+long real_time;
+int millis_now;
 
 //------------------State variables
 // not yet used but placeholders in case of additional states
@@ -19,7 +20,6 @@ SYSTEM_MODE(MANUAL);
 SYSTEM_THREAD(ENABLED);
 //SYSTEM_MODE(SEMI_AUTOMATIC);
 
-
 // Global objects
 FuelGauge batteryMonitor;
 const char * eventName = "FloodorNo";
@@ -34,17 +34,16 @@ const unsigned long EARLYBIRD_SECONDS = 0; // how long before desired time shoul
 
 void setup(void) {
 
-    if (PUBLISHING==1) {
-      Particle.connect();
-    }
-    else{
-      Cellular.off(); // turn off cellular for prelim testing (uncomment)
-    }
+  if (PUBLISHING == 1) {
+    Particle.connect();
+  } else {
+    Cellular.off(); // turn off cellular for prelim testing (uncomment)
+  }
 
-    Serial.begin(9600);
-    Serial1.begin(9600); // Initialize serial communication
-    pinMode(A0, OUTPUT);
-    digitalWrite(A0, HIGH);
+  Serial.begin(9600);
+  Serial1.begin(9600); // Initialize serial communication
+  pinMode(A0, OUTPUT);
+  digitalWrite(A0, HIGH);
 
 }
 
@@ -52,24 +51,24 @@ void loop(void) {
   // Enter state machine
   switch (state) {
 
-    case DATALOG_STATE: {
-        void loop() {
+  case DATALOG_STATE: {
+    void loop() {
 
-            digitalWrite(A0, LOW);
+      digitalWrite(A0, LOW);
 
-            delay(1000);
+      delay(1000);
 
-            digitalWrite(A0, HIGH);
+      digitalWrite(A0, HIGH);
 
-            digitalWrite(A0, LOW);
+      digitalWrite(A0, LOW);
 
-            delay(1000);
+      delay(1000);
 
-            Serial.println(Serial1.readString());
+      Serial.println(Serial1.readString());
 
-            digitalWrite(A0, HIGH);
-            
-        }
+      digitalWrite(A0, HIGH);
+
+    }
 
     float cellVoltage = batteryMonitor.getVCell();
     float stateOfCharge = batteryMonitor.getSoC();
@@ -80,65 +79,64 @@ void loop(void) {
       cellVoltage, stateOfCharge
     );
 
-     // Print out data buffer
+    // Print out data buffer
     Serial.println(data);
 
-    if (PUBLISHING==1) {
+    if (PUBLISHING == 1) {
       state = PUBLISH_STATE;
-    }
-    else{
+    } else {
       state = SLEEP_STATE;
     }
-   
-}
 
-    break;
+  }
 
-    case PUBLISH_STATE: {
+  break;
+
+  case PUBLISH_STATE: {
 
     // Prep for cellular transmission
-        bool isMaxTime = false;
-        stateTime = millis();
+    bool isMaxTime = false;
+    stateTime = millis();
 
-        while (!isMaxTime) {
+    while (!isMaxTime) {
       //connect particle to the cloud
-            if (Particle.connected() == false) {
-                Particle.connect();
-                Serial.print("Trying to connect");
-            }
+      if (Particle.connected() == false) {
+        Particle.connect();
+        Serial.print("Trying to connect");
+      }
 
       // If connected, publish data buffer
-        if (Particle.connected()) {
+      if (Particle.connected()) {
 
-            Serial.println("publishing data");
+        Serial.println("publishing data");
 
         // bool (or Future) below requires acknowledgment to proceed
-            bool success = Particle.publish(eventName, data, 60, PRIVATE, WITH_ACK);
-            Serial.printlnf("publish result %d", success); 
+        bool success = Particle.publish(eventName, data, 60, PRIVATE, WITH_ACK);
+        Serial.printlnf("publish result %d", success);
 
-            isMaxTime = true;
-            state = SLEEP_STATE;
-        }
+        isMaxTime = true;
+        state = SLEEP_STATE;
+      }
       // If not connected after certain amount of time, go to sleep to save battery
-        else {
+      else {
         // Took too long to publish, just go to sleep
-            if (millis() - stateTime >= MAX_TIME_TO_PUBLISH_MS) {
-                isMaxTime = true;
-                state = SLEEP_STATE;
-                Serial.println("max time for publishing reached without success; go to sleep");
-            }
-
-            Serial.println("Not max time, try again to connect and publish");
-            delay(500);
+        if (millis() - stateTime >= MAX_TIME_TO_PUBLISH_MS) {
+          isMaxTime = true;
+          state = SLEEP_STATE;
+          Serial.println("max time for publishing reached without success; go to sleep");
         }
+
+        Serial.println("Not max time, try again to connect and publish");
+        delay(500);
+      }
     }
-}
+  }
 
-    break;
+  break;
 
-//Ready to sleep
-    case SLEEP_STATE:{
-        Serial.println("going to sleep");
+  //Ready to sleep
+  case SLEEP_STATE: {
+    Serial.println("going to sleep");
     delay(500);
 
     // Sleep time determination and configuration
@@ -146,7 +144,7 @@ void loop(void) {
 
     config.mode(SystemSleepMode::ULTRA_LOW_POWER)
       .gpio(D2, FALLING)
-      .duration(wakeInSeconds* 1000L) // Set seconds until wake
+      .duration(wakeInSeconds * 1000 L) // Set seconds until wake
       .network(NETWORK_INTERFACE_CELLULAR, SystemSleepNetworkFlag::INACTIVE_STANDBY); // keeps the cellular modem powered, but does not wake the MCU for received data
 
     // Ready to sleep
