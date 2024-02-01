@@ -52,23 +52,15 @@ void loop(void) {
   switch (state) {
 
   case DATALOG_STATE: {
-    void loop() {
-
       digitalWrite(A0, LOW);
-
       delay(1000);
-
       digitalWrite(A0, HIGH);
-
       digitalWrite(A0, LOW);
-
       delay(1000);
 
       Serial.println(Serial1.readString());
 
       digitalWrite(A0, HIGH);
-
-    }
 
     float cellVoltage = batteryMonitor.getVCell();
     float stateOfCharge = batteryMonitor.getSoC();
@@ -144,7 +136,7 @@ void loop(void) {
 
     config.mode(SystemSleepMode::ULTRA_LOW_POWER)
       .gpio(D2, FALLING)
-      .duration(wakeInSeconds * 1000 L) // Set seconds until wake
+      .duration(wakeInSeconds * 1000L) // Set seconds until wake
       .network(NETWORK_INTERFACE_CELLULAR, SystemSleepNetworkFlag::INACTIVE_STANDBY); // keeps the cellular modem powered, but does not wake the MCU for received data
 
     // Ready to sleep
