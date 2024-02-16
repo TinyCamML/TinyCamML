@@ -23,7 +23,6 @@ State state = DATALOG_STATE;
 // Define whether (1) or not (0) to publish
 #define PUBLISHING 0
 
-String statement = Serial1.readString();
 
 unsigned long stateTime = 0;
 char data[120];
@@ -70,7 +69,7 @@ void loop(void) {
     digitalWrite(A0, LOW);
     delay(1000);
 
-    Serial.println(Serial1.readString());
+    String statement = Serial1.readString();
 
     digitalWrite(A0, HIGH);
 
