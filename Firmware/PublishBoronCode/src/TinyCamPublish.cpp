@@ -1,3 +1,13 @@
+/******************************************************/
+//       THIS IS A GENERATED FILE - DO NOT EDIT       //
+/******************************************************/
+
+#include "Particle.h"
+#line 1 "c:/Users/ppita/Documents/Particle/TinyCamPublish1/src/TinyCamPublish.ino"
+void setup(void);
+void loop(void);
+int secondsUntilNextEvent();
+#line 1 "c:/Users/ppita/Documents/Particle/TinyCamPublish1/src/TinyCamPublish.ino"
 long real_time;
 int millis_now;
 
@@ -45,7 +55,7 @@ void setup(void) {
   Serial1.begin(9600); // Initialize serial communication
   pinMode(A0, OUTPUT);
   digitalWrite(A0, HIGH);
-
+  Serial.println("hello");
 }
 
 void loop(void) {
@@ -67,9 +77,10 @@ void loop(void) {
     float stateOfCharge = batteryMonitor.getSoC();
     real_time = Time.now();
 
+
     snprintf(data, sizeof(data), "%li,%s,%.02f,%.02f", //,%.5f,%.5f,%.5f,%.5f,%.5f,%.02f,%.02f",
-      real_time, // if it takes a while to connect, this time could be offset from sensor recording
-      statement, cellVoltage, stateOfCharge
+      real_time, statement.c_str(), cellVoltage, stateOfCharge // if it takes a while to connect, this time could be offset from sensor recording
+       
     );
 
     // Print out data buffer
