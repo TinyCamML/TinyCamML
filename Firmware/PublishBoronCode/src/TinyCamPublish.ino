@@ -45,7 +45,7 @@ void setup(void) {
   Serial1.begin(9600); // Initialize serial communication
   pinMode(A0, OUTPUT);
   digitalWrite(A0, HIGH);
-  Serial.println("hello");
+  
 }
 
 void loop(void) {
