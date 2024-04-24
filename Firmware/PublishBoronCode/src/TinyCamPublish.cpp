@@ -2,12 +2,14 @@
 //       THIS IS A GENERATED FILE - DO NOT EDIT       //
 /******************************************************/
 
+#line 1 "c:/Users/efarquh/Documents/GitHub/Boron-and-OpenMV/Firmware/PublishBoronCode/src/TinyCamPublish.ino"
+//Include Particle Device OS APIs
 #include "Particle.h"
-#line 1 "c:/Users/ppita/Documents/Particle/TinyCamPublish1/src/TinyCamPublish.ino"
+
 void setup(void);
 void loop(void);
 int secondsUntilNextEvent();
-#line 1 "c:/Users/ppita/Documents/Particle/TinyCamPublish1/src/TinyCamPublish.ino"
+#line 4 "c:/Users/efarquh/Documents/GitHub/Boron-and-OpenMV/Firmware/PublishBoronCode/src/TinyCamPublish.ino"
 long real_time;
 int millis_now;
 
@@ -75,14 +77,14 @@ void loop(void) {
     String statement = Serial1.readString();
 
     digitalWrite(A0, HIGH);
-
-    float cellVoltage = batteryMonitor.getVCell();
-    float stateOfCharge = batteryMonitor.getSoC();
+    float voltage = analogRead(A1) * ((3.3/4096)*((2000000+1300000)/2000000));
+    // 3.3V / 4096 counts * ((R1 + R2) / R1) where R1 and R2 are in ohms
+    float percentcharge = (voltage/3.3)*100;
     real_time = Time.now();
 
 
     snprintf(data, sizeof(data), "%li,%s,%.02f,%.02f", //,%.5f,%.5f,%.5f,%.5f,%.5f,%.02f,%.02f",
-      real_time, statement.c_str(), cellVoltage, stateOfCharge // if it takes a while to connect, this time could be offset from sensor recording
+      real_time, statement.c_str(), voltage, percentcharge // if it takes a while to connect, this time could be offset from sensor recording
        
     );
 
