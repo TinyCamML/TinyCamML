@@ -70,12 +70,10 @@ void loop(void) {
     digitalWrite(A0, HIGH);
     float voltage = analogRead(A1) * ((3.3/4096)*((2000000+1300000)/2000000));
     // 3.3V / 4096 counts * ((R1 + R2) / R1) where R1 and R2 are in ohms
-    float percentcharge = (voltage/3.3)*100;
     real_time = Time.now();
 
-
-    snprintf(data, sizeof(data), "%li,%s,%.02f,%.02f", //,%.5f,%.5f,%.5f,%.5f,%.5f,%.02f,%.02f",
-      real_time, statement.c_str(), voltage, percentcharge // if it takes a while to connect, this time could be offset from sensor recording
+    snprintf(data, sizeof(data), "%li,%s,%.02f", //,%.5f,%.5f,%.5f,%.5f,%.5f,%.02f,%.02f",
+      real_time, statement.c_str(), voltage // if it takes a while to connect, this time could be offset from sensor recording
        
     );
 
