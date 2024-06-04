@@ -49,7 +49,7 @@ void setup(void) {
   pinMode(A0, OUTPUT);
   digitalWrite(A0, HIGH);
 
-  Serial1.begin(9600);
+  Serial1.begin(9600); //*** do we even need this? 
   Serial1.setTimeout(TIMEOUT_TINYCAM_MS);
   
 }
@@ -68,8 +68,10 @@ void loop(void) {
     String statement = Serial1.readString();
 
     digitalWrite(A0, HIGH);
-    float voltage = analogRead(A1) * ((3.3/4096)*((2000000+1300000)/2000000));
-    // 3.3V / 4096 counts * ((R1 + R2) / R1) where R1 and R2 are in ohms
+    float voltage = analogRead(A1) * ((3.3/4096)*((2000000+1300000)/2000000))*((2000000+1300000)/2000000);
+    // 3.3V / 4096 counts * ((R1 + R2) / R1) * ((R1 + R2) / R1) where R1 and R2 are in ohms
+    // analogRead(A1) * ((3.3/4096)*((2000000+1300000)/2000000)) is the true voltage, and the extra *((R1 + R2) / R1)
+    //             is to scale our V back up to be out of 5 V since our nominal input voltage is 5 V 
     real_time = Time.now();
 
     snprintf(data, sizeof(data), "%li,%s,%.02f", //,%.5f,%.5f,%.5f,%.5f,%.5f,%.02f,%.02f",
