@@ -1,11 +1,10 @@
 # Untitled - By: ebgoldstein - Wed Feb 14 2024
-import sensor, image, time, utime, pyb, tf, machine
+import sensor, image, time, utime, pyb, tf, machine, gc
 from pyb import UART, Pin, ExtInt
 from machine import LED
 
 uart = machine.UART(1, baudrate=9600)
 uart = UART(1, 9600) # UART1, adjust baudrate as needed
-
 
 led = LED("LED_BLUE")
 
@@ -15,8 +14,6 @@ sensor.set_pixformat(sensor.RGB565) # or sensor.GRAYSCALE
 sensor.set_framesize(sensor.QVGA)
 
 sensor.skip_frames(time = 2000)
-
-clock = time.clock()
 
 net = tf.load('MNv2Flood_cat (3).tflite', load_to_fb=True)
 labels = ['Flood', 'NoFlood']
@@ -29,10 +26,6 @@ pin = Pin("P7", Pin.IN, Pin.PULL_UP)
 ext = ExtInt(pin, ExtInt.IRQ_FALLING, Pin.PULL_UP, callback)
 
 while(True):
-
-    clock.tick() # Update the FPS clock.
-
-
 
     img = sensor.snapshot()
 
@@ -49,15 +42,16 @@ while(True):
         print('No Flood')
         uart.write('No Flood')
 
+    #Debugging code
+    #led.on()
+    #time.sleep_ms(500)
+    #led.off()
+    #time.sleep_ms(500)
 
-    led.on()
-    time.sleep_ms(500)
-    led.off()
-    time.sleep_ms(500)
+    #debugging to see memory growth
+    # print(gc.mem_alloc())
+    
+    # run garbarge collection to prevent memory growth
+    gc.collect()
 
-
-    #time.sleep_ms(100)
     machine.sleep()
-
-
-    print(clock.fps())
