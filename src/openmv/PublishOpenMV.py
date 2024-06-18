@@ -15,7 +15,7 @@ sensor.set_framesize(sensor.QVGA)
 
 sensor.skip_frames(time = 2000)
 
-net = tf.load('MNv2Flood_cat (3).tflite', load_to_fb=True)
+net = tf.load('MNv2Flood_cat.tflite', load_to_fb=True)
 labels = ['Flood', 'NoFlood']
 
 def callback(line):
@@ -50,7 +50,7 @@ while(True):
 
     #debugging to see memory growth
     # print(gc.mem_alloc())
-    
+
     # run garbarge collection to prevent memory growth
     gc.collect()
 
