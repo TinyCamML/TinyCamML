@@ -74,6 +74,10 @@ void loop(void) {
     //             is to scale our V back up to be out of 5 V since our nominal input voltage is 5 V 
     real_time = Time.now();
 
+    Serial1.println(real_time); //I want it to send its datetime to the openmv
+    Serial.println(real_time);
+    delay(100);
+
     snprintf(data, sizeof(data), "%li,%s,%.02f", //,%.5f,%.5f,%.5f,%.5f,%.5f,%.02f,%.02f",
       real_time, statement.c_str(), voltage // if it takes a while to connect, this time could be offset from sensor recording
        
