@@ -6,8 +6,8 @@
 //Include Particle Device OS APIs
 #include "Particle.h"
 
-void setup(void);
-void loop(void);
+void setup();
+void loop();
 int secondsUntilNextEvent();
 #line 4 "c:/Users/efarquh/Documents/GitHub/Boron-and-OpenMV/src/boron/src/TinyCamPublish.ino"
 long real_time;
@@ -45,7 +45,7 @@ const unsigned long SECONDS_BETWEEN_MEASUREMENTS = 360; // What should sampling 
 const unsigned long EARLYBIRD_SECONDS = 0; // how long before desired time should I wake up? 
 const unsigned long TIMEOUT_TINYCAM_MS = 5000;
 
-void setup(void) {
+void setup() {
 
   if (PUBLISHING == 1) {
     Particle.connect();
@@ -55,15 +55,15 @@ void setup(void) {
 
   Serial.begin(9600);
   Serial1.begin(9600); // Initialize serial communication
-  pinMode(A0, OUTPUT);
-  digitalWrite(A0, HIGH);
+  pinMode(A0, OUTPUT); 
+  digitalWrite(A0, HIGH); 
 
-  Serial1.begin(9600); //*** do we even need this? 
+  //Serial1.begin(9600); //*** do we even need this? 
   Serial1.setTimeout(TIMEOUT_TINYCAM_MS);
   
 }
 
-void loop(void) {
+void loop() {
   // Enter state machine
   switch (state) {
 
@@ -72,21 +72,23 @@ void loop(void) {
     delay(1000);
     digitalWrite(A0, HIGH);
     digitalWrite(A0, LOW);
-    delay(1000);
+    delay(2000);
 
     String statement = Serial1.readString();
-
+    Serial.println(statement); 
+    real_time = Time.now();
     digitalWrite(A0, HIGH);
     float voltage = analogRead(A1) * ((3.3/4096)*((2000000+1300000)/2000000))*((2000000+1300000)/2000000);
     // 3.3V / 4096 counts * ((R1 + R2) / R1) * ((R1 + R2) / R1) where R1 and R2 are in ohms
     // analogRead(A1) * ((3.3/4096)*((2000000+1300000)/2000000)) is the true voltage, and the extra *((R1 + R2) / R1)
     //             is to scale our V back up to be out of 5 V since our nominal input voltage is 5 V 
-    real_time = Time.now();
 
-    Serial1.println(real_time); //I want it to send its datetime to the openmv
+    Serial1.end();
+    delay(1000);
+    Serial1.begin(9600);
+    Serial1.print(real_time); //Send its datetime to the openmv
     Serial.println(real_time);
-    delay(100);
-
+    delay(1000);
     snprintf(data, sizeof(data), "%li,%s,%.02f", //,%.5f,%.5f,%.5f,%.5f,%.5f,%.02f,%.02f",
       real_time, statement.c_str(), voltage // if it takes a while to connect, this time could be offset from sensor recording
        
