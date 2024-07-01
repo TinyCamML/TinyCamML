@@ -26,7 +26,12 @@ void setup() {
 
 // loop() runs over and over again, as quickly as it can execute.
 void loop() {
-  float voltage = analogRead(A1) * ((3.3/4096)*((2000000+1300000)/2000000));
+  //float voltage = analogRead(A1) * ((3.3/4096)*((2000000+1300000)/2000000));
+  //Serial.print(analogRead(A1)); 
+  //float bits = analogRead(A1); 
+  //Serial.println(bits); 
+  delay(1000); 
+  float voltage = analogRead(A1)*.00133;
   // 3.3V / 4096 counts * ((R1 + R2) / R1) where R1 and R2 are in ohms
   delay(100); 
   Serial.println(voltage); 

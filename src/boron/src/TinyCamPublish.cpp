@@ -78,10 +78,9 @@ void loop() {
     Serial.println(statement); 
     real_time = Time.now();
     digitalWrite(A0, HIGH);
-    float voltage = analogRead(A1) * ((3.3/4096)*((2000000+1300000)/2000000))*((2000000+1300000)/2000000);
-    // 3.3V / 4096 counts * ((R1 + R2) / R1) * ((R1 + R2) / R1) where R1 and R2 are in ohms
-    // analogRead(A1) * ((3.3/4096)*((2000000+1300000)/2000000)) is the true voltage, and the extra *((R1 + R2) / R1)
-    //             is to scale our V back up to be out of 5 V since our nominal input voltage is 5 V 
+    float voltage = analogRead(A1) * .00133;
+    // where .00133 = 3.3V / 4096 counts * ((R1 + R2) / R2) * ((R1 + R2) / R2) where R1 and R2 are in ohms 
+    // e.g., analogRead(A1) * ((3.3/4096)*((2000000+1300000)/2000000)) 
 
     Serial1.end();
     delay(1000);
