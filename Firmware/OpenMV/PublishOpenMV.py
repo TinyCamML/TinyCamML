@@ -22,13 +22,9 @@ labels = ['Flood', 'NoFlood']
 def callback(line):
     pass
 
-#function to save images to sd card
-def saveimage(file_name, image):
-    if not "images" in os.listdir():
-        os.mkdir("images")  # Make a temp directory
-
-    image.save('images/' + file_name, quality=90)
-
+#make directory to save images
+if not "images" in os.listdir():
+    os.mkdir("images")  # Make a temp directory
 
 pin = Pin("P7", Pin.IN, Pin.PULL_UP)
 ext = ExtInt(pin, ExtInt.IRQ_FALLING, Pin.PULL_UP, callback)
@@ -51,10 +47,8 @@ while(True):
         poll.poll()
         curr_time = uart.read().decode('utf-8')
         file_name = curr_time +"_FLOOD"
-        f = open("DataLog.txt", "a")
-        f.write(curr_time+",Flood\n")
-        f.close()
-
+        floodstate = "Flood"
+        
     else:
         print('No Flood')
         uart.write('No Flood')
@@ -64,13 +58,13 @@ while(True):
         poll.poll()
         curr_time = uart.read().decode('utf-8')
         file_name = curr_time +"_NOFLOOD"
-        f = open("DataLog.txt", "a")
-        f.write(curr_time+",NoFlood\n")
-        f.close()
+        floodstate = "NoFlood"
+
+    with open("./DataLog.txt", 'a') as file:
+        file.write(curr_time + "," + floodstate + "," + file_name + "," + gc.mem_alloc() + "\n")
 
     #print(file_name)
-    saveimage(file_name, img)
-
+    img.save("./images/" + file_name + ".jpg")
 
     #Debugging code
     #led.on()
