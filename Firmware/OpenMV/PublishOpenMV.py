@@ -10,11 +10,6 @@ uart = UART(1, 9600) # UART1, adjust baudrate as needed
 led = LED("LED_BLUE")
 
 #rtc = pyb.RTC()
-sensor.reset() # Initialize the camera sensor.
-sensor.set_pixformat(sensor.RGB565) # or sensor.GRAYSCALE
-sensor.set_framesize(sensor.QVGA)
-
-sensor.skip_frames(time = 2000)
 
 net = tf.load('MNv2Flood_cat_CG.tflite', load_to_fb=True)
 labels = ['Flood', 'NoFlood']
@@ -30,6 +25,11 @@ pin = Pin("P7", Pin.IN, Pin.PULL_UP)
 ext = ExtInt(pin, ExtInt.IRQ_FALLING, Pin.PULL_UP, callback)
 
 while(True):
+    sensor.reset() # Initialize the camera sensor.
+    sensor.set_pixformat(sensor.RGB565) # or sensor.GRAYSCALE
+    sensor.set_framesize(sensor.QVGA)
+    sensor.skip_frames(time = 2000)
+
     img = sensor.snapshot()
 
     TF_objs = net.classify(img)
