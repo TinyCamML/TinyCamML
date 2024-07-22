@@ -30,7 +30,6 @@ pin = Pin("P7", Pin.IN, Pin.PULL_UP)
 ext = ExtInt(pin, ExtInt.IRQ_FALLING, Pin.PULL_UP, callback)
 
 while(True):
-
     img = sensor.snapshot()
 
     TF_objs = net.classify(img)
@@ -48,7 +47,7 @@ while(True):
         curr_time = uart.read().decode('utf-8')
         file_name = curr_time +"_FLOOD"
         floodstate = "Flood"
-        
+
     else:
         print('No Flood')
         uart.write('No Flood')
@@ -61,7 +60,7 @@ while(True):
         floodstate = "NoFlood"
 
     with open("./DataLog.txt", 'a') as file:
-        file.write(curr_time + "," + floodstate + "," + file_name + "," + gc.mem_alloc() + "\n")
+        file.write(curr_time + "," + floodstate + "," + file_name + "," + str(gc.mem_alloc()) + "\n")
 
     #print(file_name)
     img.save("./images/" + file_name + ".jpg")

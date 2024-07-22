@@ -2,14 +2,14 @@
 //       THIS IS A GENERATED FILE - DO NOT EDIT       //
 /******************************************************/
 
-#line 1 "c:/Users/efarquh/Documents/GitHub/Boron-and-OpenMV/src/boron/src/TinyCamPublish.ino"
+#line 1 "c:/Users/efarquh/Documents/GitHub/Boron-and-OpenMV/Firmware/Boron/src/TinyCamPublish.ino"
 //Include Particle Device OS APIs
 #include "Particle.h"
 
 void setup();
 void loop();
 int secondsUntilNextEvent();
-#line 4 "c:/Users/efarquh/Documents/GitHub/Boron-and-OpenMV/src/boron/src/TinyCamPublish.ino"
+#line 4 "c:/Users/efarquh/Documents/GitHub/Boron-and-OpenMV/Firmware/Boron/src/TinyCamPublish.ino"
 long real_time;
 int millis_now;
 
