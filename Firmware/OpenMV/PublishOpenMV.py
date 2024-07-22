@@ -4,12 +4,7 @@ import sensor, image, time, utime, pyb, tf, machine, gc, os, uselect
 from pyb import UART, Pin, ExtInt
 from machine import LED
 
-uart = machine.UART(1, baudrate=9600)
 uart = UART(1, 9600) # UART1, adjust baudrate as needed
-
-led = LED("LED_BLUE")
-
-#rtc = pyb.RTC()
 
 net = tf.load('MNv2Flood_cat_CG.tflite', load_to_fb=True)
 labels = ['Flood', 'NoFlood']
@@ -25,8 +20,9 @@ pin = Pin("P7", Pin.IN, Pin.PULL_UP)
 ext = ExtInt(pin, ExtInt.IRQ_FALLING, Pin.PULL_UP, callback)
 
 while(True):
+    #Reinitialize the sensor after sleep
     sensor.reset() # Initialize the camera sensor.
-    sensor.set_pixformat(sensor.RGB565) # or sensor.GRAYSCALE
+    sensor.set_pixformat(sensor.RGB565)
     sensor.set_framesize(sensor.QVGA)
     sensor.skip_frames(time = 2000)
 
@@ -65,25 +61,11 @@ while(True):
     #print(file_name)
     img.save("./images/" + file_name + ".jpg")
 
-    #Debugging code
-    #led.on()
-    #time.sleep_ms(500)
-    #led.off()
-    #time.sleep_ms(500)
-
-    #debugging to see memory growth
-    # print(gc.mem_alloc())
-
     # run garbarge collection to prevent memory growth
     gc.collect()
 
     # Begin power down ------------------------------------
-    # Enable sensor softsleep
-    #sensor.sleep(True)
     # Shutdown the sensor (pulls PWDN high).
-    #sensor.shutdown(True)
-    # Enable RTC interrupts every 6 minutes (in microseconds)
-    # camera will RESET after wakeup from deepsleep Mode.
-    #rtc.wakeup(334 * 1000)
-    # Enter Deepsleep Mode (i.e. the OpenMV Cam effectively turns itself off except for the RTC).
-    machine.sleep() #not sure if deepsleep can be awoken via toggle pin
+    sensor.shutdown(True)
+    # Enter lightsleep Mode
+    machine.lightsleep()
