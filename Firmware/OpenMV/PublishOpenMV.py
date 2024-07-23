@@ -53,7 +53,7 @@ while(True):
     curr_time = uart.read().decode('utf-8')
     
     #SAVE LOG AND PIC
-    filename = str(curr_time) + '_' + floodstate
+    file_name = str(curr_time) + '_' + floodstate
 
     with open("./DataLog.txt", 'a') as file:
         file.write(curr_time + "," + floodstate + "," + file_name + "," + str(gc.mem_alloc()) + "\n")
