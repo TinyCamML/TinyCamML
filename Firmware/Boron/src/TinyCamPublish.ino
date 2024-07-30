@@ -14,7 +14,14 @@ enum State {
 State state = DATALOG_STATE;
 
 // Define whether (1) or not (0) to publish
+<<<<<<< Updated upstream
 #define PUBLISHING 0
+=======
+#define PUBLISHING 1
+#define OPENMV A0
+#define ON HIGH
+#define OFF LOW
+>>>>>>> Stashed changes
 
 unsigned long stateTime = 0;
 char data[120];
@@ -34,7 +41,8 @@ const unsigned long MAX_TIME_TO_PUBLISH_MS = 20000; // Only stay awake for this 
 // const unsigned long TIME_AFTER_PUBLISH_MS = 4000; // After publish, wait 4 seconds for data to go out
 const unsigned long SECONDS_BETWEEN_MEASUREMENTS = 30; // What should sampling period be?
 const unsigned long EARLYBIRD_SECONDS = 0; // how long before desired time should I wake up? 
-const unsigned long TIMEOUT_TINYCAM_MS = 5000;
+const unsigned long TIMEOUT_TINYCAM_MS = 20000;
+String statement; 
 
 void setup() {
 
@@ -47,9 +55,8 @@ void setup() {
   Serial.begin(9600);
   Serial1.begin(9600); // Initialize serial communication
   pinMode(A0, OUTPUT); 
-  digitalWrite(A0, HIGH); 
+  //digitalWrite(A0, HIGH); 
 
-  //Serial1.begin(9600); //*** do we even need this? 
   Serial1.setTimeout(TIMEOUT_TINYCAM_MS);
   
 }
@@ -59,16 +66,15 @@ void loop() {
   switch (state) {
 
   case DATALOG_STATE: {
-    digitalWrite(A0, LOW);
-    delay(1000);
-    digitalWrite(A0, HIGH);
-    digitalWrite(A0, LOW);
-    delay(2000);
-
-    String statement = Serial1.readString();
-    Serial.println(statement); 
+    Serial1.begin(9600);
+    delay(100);
+    openmv(ON); 
+    delay(100); 
+    if (Serial1.available() > 0) {
+      statement = Serial1.readStringUntil('.'); 
+      Serial.println(statement);
+    }     
     real_time = Time.now();
-    digitalWrite(A0, HIGH);
     float voltage = analogRead(A1) * .00133;
     // where .00133 = 3.3V / 4096 counts * ((R1 + R2) / R2) * ((R1 + R2) / R2) where R1 and R2 are in ohms 
     // e.g., analogRead(A1) * ((3.3/4096)*((2000000+1300000)/2000000)) 
@@ -76,6 +82,7 @@ void loop() {
     Serial1.end();
     delay(1000);
     Serial1.begin(9600);
+    delay(100);
     Serial1.print(real_time); //Send its datetime to the openmv
     Serial.println(real_time);
     delay(1000);
@@ -84,8 +91,11 @@ void loop() {
        
     );
 
+    delay(1000);
     // Print out data buffer
     Serial.println(data);
+    Serial1.end(); 
+    openmv(OFF); 
 
     if (PUBLISHING == 1) {
       state = PUBLISH_STATE;
@@ -102,14 +112,6 @@ void loop() {
     // Prep for cellular transmission
     bool isMaxTime = false;
     stateTime = millis();
-
-    
-    // Clean out any residual junk in buffer and restart serial port
-    Serial1.end();
-    delay(1000);
-    Serial1.begin(9600);
-    delay(500);
-    Serial1.setTimeout(TIMEOUT_TINYCAM_MS);
 
     while (!isMaxTime) {
       //connect particle to the cloud
@@ -181,4 +183,10 @@ int secondsUntilNextEvent() {
   Serial.println(seconds_to_sleep);
 
   return seconds_to_sleep;
+}
+
+void openmv(byte state)
+{
+  digitalWrite(OPENMV, state);
+  delay(50);
 }
