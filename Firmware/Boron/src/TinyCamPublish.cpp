@@ -24,14 +24,10 @@ enum State {
 State state = DATALOG_STATE;
 
 // Define whether (1) or not (0) to publish
-<<<<<<< Updated upstream
-#define PUBLISHING 0
-=======
 #define PUBLISHING 1
 #define OPENMV A0
 #define ON HIGH
 #define OFF LOW
->>>>>>> Stashed changes
 
 unsigned long stateTime = 0;
 char data[120];
@@ -49,7 +45,7 @@ SystemSleepConfiguration config;
 // Various timing constants
 const unsigned long MAX_TIME_TO_PUBLISH_MS = 20000; // Only stay awake for this time trying to connect to the cloud and publish
 // const unsigned long TIME_AFTER_PUBLISH_MS = 4000; // After publish, wait 4 seconds for data to go out
-const unsigned long SECONDS_BETWEEN_MEASUREMENTS = 30; // What should sampling period be?
+const unsigned long SECONDS_BETWEEN_MEASUREMENTS = 360; // What should sampling period be?
 const unsigned long EARLYBIRD_SECONDS = 0; // how long before desired time should I wake up? 
 const unsigned long TIMEOUT_TINYCAM_MS = 20000;
 String statement; 
