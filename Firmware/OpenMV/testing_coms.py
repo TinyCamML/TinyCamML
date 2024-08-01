@@ -1,33 +1,33 @@
-# Untitled - By: ebgoldstein - Wed Feb 14 2024
-## Adding edits by combining senior design teams and EBG's - Liz Farquhar 6/18/2024
-# EBG clean up 7/23/24
-# LF turned off the external pin interrupt 8/1/2024
-
+# Testing Coms - By: efarquhar
 import sensor, image, time, utime, pyb, tf, machine, gc, os, uselect
 from pyb import UART, Pin, ExtInt
 from machine import LED
 
-#load the TF lite micro file
+
 net = tf.load('MNv2Flood_cat_CG.tflite', load_to_fb=True)
 labels = ['Flood', 'NoFlood']
+
+print("It does run this part everytime")
+
+def callback(line):
+    pass
 
 #make directory to save images
 if not "images" in os.listdir():
     os.mkdir("images")  # Make a temp directory
 
-uart = UART(1, 9600) # UART1, adjust baudrate as needed
-
-def callback(line):
-    pass
+pin = Pin("P7", Pin.IN, Pin.PULL_UP)
+ext = ExtInt(pin, ExtInt.IRQ_FALLING, Pin.PULL_UP, callback)
 
 while(True):
     #Reinitialize the sensor after sleep
+    uart = pyb.UART(1, 9600, timeout_char=1000) # UART1, adjust baudrate as needed
     sensor.reset() # Initialize the camera sensor.
     sensor.set_pixformat(sensor.RGB565)
     sensor.set_framesize(sensor.QVGA)
     sensor.skip_frames(time = 2000)
-    
-    #TAKE AND CLASSIFY PIC
+    pyb.delay(100)
+
     img = sensor.snapshot()
     TF_objs = net.classify(img)
     Flood = TF_objs[0].output()[0]
@@ -35,43 +35,38 @@ while(True):
 
     if Flood > NoFlood:
         print('Flood')
-        uart.write('Flood.')
-        pyb.delay(1500)
+        uart.write('Flood')
         floodstate = "Flood"
+
     else:
-        print('No Flood')
-        uart.write('No Flood.')
-        pyb.delay(1500)
+        print('NoFlood')
+        uart.write('NoFlood')
         floodstate = "NoFlood"
-    print(floodstate)
 
-    #COMMS via UART
-    pyb.delay(1000);
-    poll = uselect.poll()
-    poll.register(uart, uselect.POLLIN)
-    poll.poll()
-    curr_time = uart.read().decode('utf-8')
-    
-    #SAVE LOG AND PIC
-    file_name = str(curr_time) + '_' + floodstate
+    uart.deinit()
+    pyb.delay(1000)
+    uart = pyb.UART(1, 9600, timeout_char=1000)
+    pyb.delay(100)
 
     poll = uselect.poll()
     poll.register(uart, uselect.POLLIN)
     poll.poll()
     curr_time = uart.read().decode('utf-8')
+
     file_name = curr_time + floodstate
 
     with open("./DataLog.txt", 'a') as file:
         file.write(curr_time + "," + floodstate + "," + str(gc.mem_alloc()) + "\n")
 
+    #print(file_name)
     img.save("./images/" + file_name + ".jpg")
 
     # run garbarge collection to prevent memory growth
-    #del img
+    del img
     gc.collect()
 
     # Begin power down ------------------------------------
     # Shutdown the sensor (pulls PWDN high).
     sensor.shutdown(True)
     # Enter lightsleep Mode
-    #machine.lightsleep()
+    machine.lightsleep()

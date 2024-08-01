@@ -14,11 +14,7 @@ enum State {
 State state = DATALOG_STATE;
 
 // Define whether (1) or not (0) to publish
-
-#define PUBLISHING 1
-#define OPENMV A0
-#define ON HIGH
-#define OFF LOW
+#define PUBLISHING 0
 
 unsigned long stateTime = 0;
 char data[120];
@@ -35,11 +31,11 @@ SystemSleepConfiguration config;
 
 // Various timing constants
 const unsigned long MAX_TIME_TO_PUBLISH_MS = 20000; // Only stay awake for this time trying to connect to the cloud and publish
-// const unsigned long TIME_AFTER_PUBLISH_MS = 4000; // After publish, wait 4 seconds for data to go out
 const unsigned long SECONDS_BETWEEN_MEASUREMENTS = 360; // What should sampling period be?
 const unsigned long EARLYBIRD_SECONDS = 0; // how long before desired time should I wake up? 
-const unsigned long TIMEOUT_TINYCAM_MS = 20000;
-String statement; 
+const unsigned long TIMEOUT_TINYCAM_MS = 5000;
+
+String statement;
 
 void setup() {
 
@@ -52,47 +48,51 @@ void setup() {
   Serial.begin(9600);
   Serial1.begin(9600); // Initialize serial communication
   pinMode(A0, OUTPUT); 
-  //digitalWrite(A0, HIGH); 
-
   Serial1.setTimeout(TIMEOUT_TINYCAM_MS);
-  
 }
 
 void loop() {
   // Enter state machine
   switch (state) {
-
   case DATALOG_STATE: {
+    Serial1.flush();
+    delay(100);
     Serial1.begin(9600);
     delay(100);
-    openmv(ON); 
-    delay(100); 
-    if (Serial1.available() > 0) {
-      statement = Serial1.readStringUntil('.'); 
-      Serial.println(statement);
-    }     
+    digitalWrite(A0, LOW);
+    delay(1000);
+    digitalWrite(A0, HIGH);
+    digitalWrite(A0, LOW);
+    delay(2000);
+    if(Serial1.available() > 0)
+    {
+      statement = Serial1.readString();
+    } else {
+        Serial.print("could not receive from openmv"); 
+      }
+
+    Serial.println(statement); 
     real_time = Time.now();
-    float voltage = analogRead(A1) * .00133;
-    // where .00133 = 3.3V / 4096 counts * ((R1 + R2) / R2) * ((R1 + R2) / R2) where R1 and R2 are in ohms 
-    // e.g., analogRead(A1) * ((3.3/4096)*((2000000+1300000)/2000000)) 
 
     Serial1.end();
-    delay(1000);
-    Serial1.begin(9600);
+    Serial1.flush(); 
     delay(100);
-    Serial1.print(real_time); //Send its datetime to the openmv
-    Serial.println(real_time);
-    delay(1000);
-    snprintf(data, sizeof(data), "%li,%s,%.02f", //,%.5f,%.5f,%.5f,%.5f,%.5f,%.02f,%.02f",
-      real_time, statement.c_str(), voltage // if it takes a while to connect, this time could be offset from sensor recording
-       
-    );
+    Serial1.begin(9600);
+    delay(1000); 
+    if(Serial1.available() > 0)
+    {
+      statement = Serial1.println(real_time);
+    } else {
+      Serial.print("could not send datetime to openmv"); 
+    }
 
-    delay(1000);
+    delay(2000);
+    
     // Print out data buffer
-    Serial.println(data);
-    Serial1.end(); 
-    openmv(OFF); 
+    Serial.print(real_time);
+    Serial.print(",");
+    Serial.println(statement); 
+    Serial1.end();
 
     if (PUBLISHING == 1) {
       state = PUBLISH_STATE;
@@ -121,8 +121,6 @@ void loop() {
       if (Particle.connected()) {
 
         Serial.println("publishing data");
-
-        // bool (or Future) below requires acknowledgment to proceed
         bool success = Particle.publish(eventName, data, 60, PRIVATE, WITH_ACK);
         Serial.printlnf("publish result %d", success);
 
@@ -152,10 +150,11 @@ void loop() {
     delay(500);
 
     // Sleep time determination and configuration
-    int wakeInSeconds = secondsUntilNextEvent(); // Calculate how long to sleep 
+    //int wakeInSeconds = secondsUntilNextEvent(); // Calculate how long to sleep 
+    int wakeInSeconds = 30;
 
     config.mode(SystemSleepMode::ULTRA_LOW_POWER)
-      .gpio(D2, FALLING)
+      .gpio(D2, FALLING) //Is this supposed to be D2 pin?? ************
       .duration(wakeInSeconds * 1000L) // Set seconds until wake
       .network(NETWORK_INTERFACE_CELLULAR, SystemSleepNetworkFlag::INACTIVE_STANDBY); // keeps the cellular modem powered, but does not wake the MCU for received data
 
@@ -180,10 +179,4 @@ int secondsUntilNextEvent() {
   Serial.println(seconds_to_sleep);
 
   return seconds_to_sleep;
-}
-
-void openmv(byte state)
-{
-  digitalWrite(OPENMV, state);
-  delay(50);
 }
