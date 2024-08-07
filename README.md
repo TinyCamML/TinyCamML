@@ -1,7 +1,10 @@
 # The Boron & OpenMV TinyCamML: 
 ### A small field-deployable camera with a cell connection.
 
+![image](https://github.com/TinyCamML/Boron-and-OpenMV/assets/72474059/38a63051-1924-43c2-a9f8-85caf0fc914a)
+
 <img src="./assets/IMG_2059.JPG" width=20% height=20%/>
+
 
 ### Overview:
 Have you ever wanted to deploy a field camera, use machine learning on the images, and then send some message via cell? Us too! This repository is our work-in-progress on building the camera of our dreams. 
