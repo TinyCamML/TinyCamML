@@ -1,7 +1,9 @@
-## The Boron & OpenMV TinyCamML: 
+# The Boron & OpenMV TinyCamML: 
 ### A small filed-deployable camera with a cell connection.
 
-Overview:
+<img src="./assets/IMG_2059.JPG" width=20% height=20%/>
+
+### Overview:
 Have you ever wanted to deploy a field camera, use machine learning on the images, and then send some message via cell? Us too! This repository is our work-in-progress on building the camera of our dreams. 
 
 Our initial goal is to build cameras that overlook roadways, take pictures of the road, determine if the roadway is flooded, and send a simple message (i.e., 'flooded' or 'not flooded') via cell to a google sheet. 
