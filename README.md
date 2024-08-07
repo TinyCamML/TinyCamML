@@ -1,5 +1,5 @@
 # The Boron & OpenMV TinyCamML: 
-### A small filed-deployable camera with a cell connection.
+### A small field-deployable camera with a cell connection.
 
 <img src="./assets/IMG_2059.JPG" width=20% height=20%/>
 
