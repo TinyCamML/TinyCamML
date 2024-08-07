@@ -1,6 +1,5 @@
-#  SUNNY DAY FLOODING SENSOR
-######
-## Sunny Day Flooding Sensor has 7 printed parts. 
+#  The Boron + OpenMV TinyCamML has 7 printed parts:
+
 - 5 Mounting Parts
   -  Solar_panel_mount.stl
   -  Visor.stl
