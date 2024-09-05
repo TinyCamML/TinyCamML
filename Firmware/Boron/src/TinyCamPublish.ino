@@ -72,7 +72,7 @@ void loop() {
       Serial.println(statement);
     }     
     real_time = Time.now();
-    float voltage = analogRead(A1) * .00133;
+    //float voltage = analogRead(A1) * .00133;
     // where .00133 = 3.3V / 4096 counts * ((R1 + R2) / R2) * ((R1 + R2) / R2) where R1 and R2 are in ohms 
     // e.g., analogRead(A1) * ((3.3/4096)*((2000000+1300000)/2000000)) 
 
@@ -83,10 +83,9 @@ void loop() {
     Serial1.print(real_time); //Send its datetime to the openmv
     Serial.println(real_time);
     delay(1000);
-    snprintf(data, sizeof(data), "%li,%s,%.02f", //,%.5f,%.5f,%.5f,%.5f,%.5f,%.02f,%.02f",
-      real_time, statement.c_str(), voltage // if it takes a while to connect, this time could be offset from sensor recording
+    snprintf(data, sizeof(data), "%li,%s", //,%.02f", //,%.5f,%.5f,%.5f,%.5f,%.5f,%.02f,%.02f",
+      real_time, statement.c_str()); //, voltage // if it takes a while to connect, this time could be offset from sensor recording
        
-    );
 
     delay(1000);
     // Print out data buffer
