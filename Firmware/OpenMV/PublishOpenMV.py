@@ -7,6 +7,9 @@ import sensor, image, time, utime, pyb, tf, machine, gc, os, uselect
 from pyb import UART, Pin, ExtInt
 from machine import LED
 
+# Set the threshold for detecting dark images
+brightness_threshold = 10  # Adjust this value as needed
+
 #load the TF lite micro file
 net = tf.load('MNv2Flood_cat_CG.tflite', load_to_fb=True)
 labels = ['Flood', 'NoFlood']
@@ -27,22 +30,33 @@ while(True):
     sensor.set_framesize(sensor.QVGA)
     sensor.skip_frames(time = 2000)
     
-    #TAKE AND CLASSIFY PIC
+    #TAKE PIC
     img = sensor.snapshot()
-    TF_objs = net.classify(img)
-    Flood = TF_objs[0].output()[0]
-    NoFlood = TF_objs[0].output()[1]
 
-    if Flood > NoFlood:
-        print('Flood')
-        uart.write('Flood.')
-        pyb.delay(1500)
-        floodstate = "Flood"
+    # Calculate the average brightness of the image
+    avg_brightness = img.get_statistics().mean()
+
+    # Check if the image is too dark. if not, classify
+    if avg_brightness > brightness_threshold:
+        TF_objs = net.classify(img)
+        Flood = TF_objs[0].output()[0]
+        NoFlood = TF_objs[0].output()[1]
+        if Flood > NoFlood:
+            #print('Flood')
+            uart.write('Flood.')
+            pyb.delay(1500)
+            floodstate = "Flood"
+        else:
+            #print('No Flood')
+            uart.write('No Flood.')
+            pyb.delay(1500)
+            floodstate = "NoFlood"
     else:
-        print('No Flood')
-        uart.write('No Flood.')
+        #print('Too Dark')
+        uart.write('Too Dark.')
         pyb.delay(1500)
-        floodstate = "NoFlood"
+        floodstate = "TooDark"
+
     print(floodstate)
 
     #COMMS via UART
