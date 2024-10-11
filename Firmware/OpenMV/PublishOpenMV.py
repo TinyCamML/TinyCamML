@@ -11,7 +11,7 @@ from machine import LED
 brightness_threshold = 10  # Adjust this value as needed
 
 #load the TF lite micro file
-net = tf.load('MNv2Flood_cat_CG.tflite', load_to_fb=True)
+net = tf.load('MNv2Flood_cat_Sept2024.tflite', load_to_fb=True)
 labels = ['Flood', 'NoFlood']
 
 #make directory to save images
