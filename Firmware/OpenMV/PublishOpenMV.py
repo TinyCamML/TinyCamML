@@ -8,7 +8,7 @@ from pyb import UART, Pin, ExtInt
 from machine import LED
 
 #load the TF lite micro file
-net = tf.load('MNv2Flood_cat_CG.tflite', load_to_fb=True)
+net = tf.load('MNv2Flood_cat_Sept2024.tflite', load_to_fb=True)
 labels = ['Flood', 'NoFlood']
 
 #make directory to save images
@@ -26,7 +26,7 @@ while(True):
     sensor.set_pixformat(sensor.RGB565)
     sensor.set_framesize(sensor.QVGA)
     sensor.skip_frames(time = 2000)
-    
+
     #TAKE AND CLASSIFY PIC
     img = sensor.snapshot()
     TF_objs = net.classify(img)
@@ -51,7 +51,7 @@ while(True):
     poll.register(uart, uselect.POLLIN)
     poll.poll()
     curr_time = uart.read().decode('utf-8')
-    
+
     #SAVE LOG AND PIC
     file_name = str(curr_time) + '_' + floodstate
 
