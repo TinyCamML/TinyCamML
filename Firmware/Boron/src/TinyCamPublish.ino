@@ -91,6 +91,7 @@ void loop() {
     // Print out data buffer
     Serial.println(data);
     Serial1.end(); 
+    delay(1000); 
     openmv(OFF); 
 
     if (PUBLISHING == 1) {

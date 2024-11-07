@@ -15,13 +15,23 @@ net = tf.load('MNv2Flood_cat_Sept2024.tflite', load_to_fb=True)
 labels = ['Flood', 'NoFlood']
 
 #make directory to save images
-if not "images" in os.listdir():
-    os.mkdir("images")  # Make a temp directory
+#if not "images" in os.listdir():
+#    os.mkdir("images")  # Make a temp directory
 
 uart = UART(1, 9600) # UART1, adjust baudrate as needed
 
 def callback(line):
     pass
+
+def get_today_folder():
+    ts = int(curr_time) #time from boron
+    tsdt = list(time.localtime(ts)) #convert from tuple to list
+    tsdt[0] = (int(tsdt[0])-30) #subtract 30 years bc micropython starts timestamps at 2000
+    date_str = f"{tsdt[0]}-{tsdt[1]}-{tsdt[2]}" #extract date
+    folder_path = f"{date_str}"
+    if not folder_path in os.listdir():
+        os.mkdir(folder_path)
+    return folder_path
 
 while(True):
     #Reinitialize the sensor after sleep
@@ -68,10 +78,12 @@ while(True):
     curr_time = uart.read().decode('utf-8')
     file_name = curr_time + floodstate
 
+    today_folder = get_today_folder()
+
     with open("./DataLog.txt", 'a') as file:
         file.write(curr_time + "," + floodstate + "," + str(gc.mem_alloc()) + "\n")
 
-    img.save("./images/" + file_name + ".jpg")
+    img.save("./" + today_folder + "/" + file_name + ".jpg")
 
     # run garbarge collection to prevent memory growth
     #del img
