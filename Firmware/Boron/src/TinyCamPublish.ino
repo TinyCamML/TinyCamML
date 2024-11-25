@@ -49,6 +49,9 @@ void setup() {
     Cellular.off(); // turn off cellular for prelim testing (uncomment)
   }
 
+  RGB.control(true); 
+  RGB.color(0, 0, 0); //turns off status led 
+
   Serial.begin(9600);
   Serial1.begin(9600); // Initialize serial communication
   pinMode(A0, OUTPUT); 
