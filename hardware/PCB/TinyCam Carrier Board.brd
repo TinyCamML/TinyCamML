@@ -76,7 +76,6 @@
 <wire x1="81.28" y1="0" x2="160" y2="0" width="0" layer="20"/>
 <wire x1="160" y1="0" x2="160" y2="100" width="0" layer="20"/>
 <wire x1="160" y1="100" x2="0" y2="100" width="0" layer="20"/>
-<dimension x1="5.08" y1="43.18" x2="25.4" y2="43.18" x3="15.24" y3="0" textsize="1.778" layer="47" unit="inch"/>
 <wire x1="2.54" y1="48.26" x2="71.12" y2="48.26" width="0.1524" layer="20"/>
 <wire x1="0" y1="2.54" x2="0" y2="45.72" width="0.1524" layer="20"/>
 <wire x1="27.94" y1="2.54" x2="2.54" y2="2.54" width="0.1524" layer="21"/>
@@ -85,7 +84,6 @@
 <wire x1="27.94" y1="45.72" x2="27.94" y2="2.54" width="0.1524" layer="21"/>
 <wire x1="76.2" y1="0" x2="2.54" y2="0" width="0.1524" layer="20"/>
 <wire x1="0" y1="45.72" x2="2.54" y2="48.26" width="0.1524" layer="20"/>
-<dimension x1="73.66" y1="48.26" x2="73.66" y2="0" x3="86.36" y3="24.13" textsize="1.778" layer="47" dtype="vertical" unit="inch"/>
 <text x="40.64" y="5.08" size="1.778" layer="47">Pin to Pin Dist
 30.78mm</text>
 <wire x1="0" y1="2.54" x2="2.54" y2="0" width="0.1524" layer="20"/>
@@ -100,10 +98,12 @@
 <text x="43.18" y="43.18" size="1.778" layer="25">OpenMV</text>
 <text x="68.58" y="27.94" size="1.778" layer="27">ON</text>
 <text x="73.66" y="15.24" size="1.778" layer="27" rot="R180">OFF</text>
-<dimension x1="0" y1="40.64" x2="78.74" y2="40.64" x3="39.37" y3="50.8" textsize="1.778" layer="27" dtype="horizontal" unit="inch"/>
 <hole x="71.12" y="43.18" drill="3"/>
 <hole x="5.08" y="5.08" drill="3"/>
-<dimension x1="72.62" y1="43.18" x2="69.62" y2="43.18" x3="69.62" y3="43.18" textsize="1.778" layer="47" dtype="diameter"/>
+<dimension x1="72.62" y1="43.18" x2="69.62" y2="43.18" x3="69.62" y3="43.18" textsize="1.778" layer="47" dtype="diameter" visible="yes"/>
+<dimension x1="5.08" y1="43.18" x2="25.4" y2="43.18" x3="15.24" y3="-2.54" textsize="1.778" layer="47" dtype="diameter" unit="inch" visible="yes"/>
+<dimension x1="78.74" y1="40.64" x2="0" y2="40.64" x3="39.37" y3="50.8" textsize="1.778" layer="47" dtype="horizontal" unit="inch" visible="yes"/>
+<dimension x1="71.12" y1="48.26" x2="76.2" y2="0" x3="83.82" y3="24.13" textsize="1.778" layer="47" dtype="vertical" unit="inch" visible="yes"/>
 </plain>
 <libraries>
 <library name="pinhead" urn="urn:adsk.eagle:library:325">
