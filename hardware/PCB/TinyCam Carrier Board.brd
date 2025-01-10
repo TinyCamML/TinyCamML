@@ -96,8 +96,8 @@
 <wire x1="66.04" y1="2.54" x2="30.48" y2="2.54" width="0.1524" layer="21"/>
 <text x="10.16" y="43.18" size="1.778" layer="25">Boron</text>
 <text x="43.18" y="43.18" size="1.778" layer="25">OpenMV</text>
-<text x="68.58" y="27.94" size="1.778" layer="27">ON</text>
-<text x="73.66" y="15.24" size="1.778" layer="27" rot="R180">OFF</text>
+<text x="71.12" y="35.56" size="1.778" layer="27" rot="R180">ON</text>
+<text x="78.74" y="35.56" size="1.778" layer="27" rot="R180">OFF</text>
 <hole x="71.12" y="43.18" drill="3"/>
 <hole x="5.08" y="5.08" drill="3"/>
 <dimension x1="72.62" y1="43.18" x2="69.62" y2="43.18" x3="69.62" y3="43.18" textsize="1.778" layer="47" dtype="diameter" visible="yes"/>
@@ -2077,14 +2077,14 @@ design rules under a new name.</description>
 <attribute name="POPULARITY" value="28" x="29.21" y="58.42" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="8.255" y="13.97" size="1.27" layer="27" rot="R90"/>
 </element>
-<element name="J1" library="Eagle_WR-DC (rev21a)" package="694102303002" package3d_urn="urn:adsk.eagle:package:14886064/3" value=" 694102303002 " x="72.39" y="34.29" smashed="yes" rot="R180">
-<attribute name="DATASHEET-URL" value="https://www.we-online.com/catalog/datasheet/694102303002.pdf" x="40.64" y="40.64" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="IR" value="2A" x="40.64" y="40.64" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="MOUNT" value="THT" x="40.64" y="40.64" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="NAME" x="77.47" y="37.79" size="1.27" layer="25" ratio="13" rot="SR0" align="bottom-center"/>
-<attribute name="PART-NUMBER" value=" 694102303002 " x="40.64" y="40.64" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="TYPE" value="Right Angled" x="40.64" y="40.64" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="WORKING-VOLTAGE" value="30V(AC)" x="40.64" y="40.64" size="1.778" layer="27" rot="R180" display="off"/>
+<element name="J1" library="Eagle_WR-DC (rev21a)" package="694102303002" package3d_urn="urn:adsk.eagle:package:14886064/3" value=" 694102303002 " x="72.39" y="19.05" smashed="yes" rot="R180">
+<attribute name="DATASHEET-URL" value="https://www.we-online.com/catalog/datasheet/694102303002.pdf" x="40.64" y="25.4" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="IR" value="2A" x="40.64" y="25.4" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MOUNT" value="THT" x="40.64" y="25.4" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="NAME" x="77.47" y="22.55" size="1.27" layer="25" ratio="13" rot="SR0" align="bottom-center"/>
+<attribute name="PART-NUMBER" value=" 694102303002 " x="40.64" y="25.4" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="TYPE" value="Right Angled" x="40.64" y="25.4" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="WORKING-VOLTAGE" value="30V(AC)" x="40.64" y="25.4" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 <element name="OMV_LEFT_HEADER" library="con-lsta" library_urn="urn:adsk.eagle:library:161" package="FE08" package3d_urn="urn:adsk.eagle:package:8194/1" value="" x="33.02" y="13.97" smashed="yes" rot="R90">
 <attribute name="MF" value="" x="68.58" y="39.37" size="1.778" layer="27" rot="R90" display="off"/>
@@ -2104,19 +2104,19 @@ design rules under a new name.</description>
 <attribute name="POPULARITY" value="10" x="94.28" y="40.64" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="66.721" y="3.81" size="1.27" layer="27" ratio="10" rot="R90"/>
 </element>
-<element name="S1" library="Switch" library_urn="urn:adsk.eagle:library:16378657" package="DS-01" package3d_urn="urn:adsk.eagle:package:38918339/1" value="DS-01" x="71.12" y="21.59" smashed="yes">
-<attribute name="CATEGORY" value="SWITCH" x="87.63" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="DESCRIPTION" value="" x="87.63" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER" value="" x="87.63" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="" x="87.63" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="72.898" y="27.051" size="1.27" layer="25" ratio="10"/>
-<attribute name="OPERATING_TEMP" value="" x="87.63" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="PART_STATUS" value="" x="87.63" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="ROHS_COMPLIANT" value="" x="87.63" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="SERIES" value="" x="87.63" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="SUB-CATEGORY" value="" x="87.63" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="THERMALLOSS" value="" x="87.63" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="TYPE" value="SPST" x="87.63" y="13.97" size="1.778" layer="27" display="off"/>
+<element name="S1" library="Switch" library_urn="urn:adsk.eagle:library:16378657" package="DS-01" package3d_urn="urn:adsk.eagle:package:38918339/1" value="DS-01" x="72.39" y="38.1" smashed="yes" rot="R90">
+<attribute name="CATEGORY" value="SWITCH" x="80.01" y="54.61" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="DESCRIPTION" value="" x="80.01" y="54.61" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MANUFACTURER" value="" x="80.01" y="54.61" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MPN" value="" x="80.01" y="54.61" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="NAME" x="66.929" y="39.878" size="1.27" layer="25" ratio="10" rot="R90"/>
+<attribute name="OPERATING_TEMP" value="" x="80.01" y="54.61" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="PART_STATUS" value="" x="80.01" y="54.61" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="ROHS_COMPLIANT" value="" x="80.01" y="54.61" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="SERIES" value="" x="80.01" y="54.61" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="SUB-CATEGORY" value="" x="80.01" y="54.61" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="THERMALLOSS" value="" x="80.01" y="54.61" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="TYPE" value="SPST" x="80.01" y="54.61" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
 <element name="Q1" library="IRLB8721PBF" package="TO254P1067X483X2057-3" value="IRLB8721PBF" x="71.12" y="7.62" smashed="yes" rot="R90">
 <attribute name="CHECK_PRICES" value="https://www.snapeda.com/parts/IRLB8721PBF/Infineon/view-part/?ref=eda" x="71.12" y="7.62" size="1.778" layer="27" rot="R90" display="off"/>
@@ -2144,14 +2144,14 @@ design rules under a new name.</description>
 <contactref element="R1" pad="1"/>
 <wire x1="76.2" y1="11.43" x2="72.39" y2="11.43" width="0.1524" layer="16"/>
 <wire x1="72.39" y1="11.43" x2="71.12" y2="10.16" width="0.1524" layer="16"/>
-<wire x1="72.39" y1="34.29" x2="70.09" y2="36.59" width="0.1524" layer="16"/>
-<wire x1="70.09" y1="36.59" x2="70.09" y2="37.09" width="0.1524" layer="16"/>
-<wire x1="76.2" y1="11.43" x2="76.2" y2="30.48" width="0.1524" layer="16"/>
-<wire x1="76.2" y1="30.48" x2="72.39" y2="34.29" width="0.1524" layer="16"/>
 <wire x1="25.4" y1="12.7" x2="31.1023625" y2="12.7" width="0.1524" layer="16"/>
 <wire x1="31.1023625" y1="12.7" x2="31.9913625" y2="13.589" width="0.1524" layer="16"/>
 <wire x1="31.9913625" y1="13.589" x2="67.691" y2="13.589" width="0.1524" layer="16"/>
 <wire x1="67.691" y1="13.589" x2="71.12" y2="10.16" width="0.1524" layer="16"/>
+<wire x1="70.09" y1="21.85" x2="72.39" y2="19.55" width="0.1524" layer="16"/>
+<wire x1="72.39" y1="19.55" x2="72.39" y2="19.05" width="0.1524" layer="16"/>
+<wire x1="76.2" y1="11.43" x2="72.39" y2="15.24" width="0.1524" layer="16"/>
+<wire x1="72.39" y1="15.24" x2="72.39" y2="19.05" width="0.1524" layer="16"/>
 </signal>
 <signal name="TX">
 <contactref element="BORON_16PIN_HEADER" pad="15"/>
@@ -2241,13 +2241,14 @@ design rules under a new name.</description>
 <contactref element="S1" pad="1"/>
 <contactref element="OMV_RIGHT_HEADER" pad="2"/>
 <wire x1="5.08" y1="20.32" x2="5.08" y2="20.697075" width="0.1524" layer="1"/>
-<wire x1="5.08" y1="20.697075" x2="3.3274" y2="22.449675" width="0.1524" layer="1"/>
-<wire x1="3.3274" y1="43.590325" x2="5.08" y2="45.342925" width="0.1524" layer="1"/>
-<wire x1="3.3274" y1="22.449675" x2="3.3274" y2="43.590325" width="0.1524" layer="1"/>
-<wire x1="5.08" y1="45.342925" x2="43.557075" y2="45.342925" width="0.1524" layer="1"/>
-<wire x1="43.557075" y1="45.342925" x2="71.12" y2="17.78" width="0.1524" layer="1"/>
-<wire x1="63.8" y1="7.62" x2="71.12" y2="14.94" width="0.1524" layer="1"/>
-<wire x1="71.12" y1="14.94" x2="71.12" y2="17.78" width="0.1524" layer="1"/>
+<wire x1="76.2" y1="38.1" x2="76.2" y2="20.02" width="0.1524" layer="1"/>
+<wire x1="76.2" y1="20.02" x2="63.8" y2="7.62" width="0.1524" layer="1"/>
+<wire x1="26.673925" y1="16.891" x2="26.572325" y2="16.7894" width="0.1524" layer="1"/>
+<wire x1="26.572325" y1="16.7894" x2="8.6106" y2="16.7894" width="0.1524" layer="1"/>
+<wire x1="8.6106" y1="16.7894" x2="5.08" y2="20.32" width="0.1524" layer="1"/>
+<wire x1="33.909" y1="16.891" x2="26.673925" y2="16.891" width="0.1524" layer="1"/>
+<wire x1="33.909" y1="16.891" x2="54.529" y2="16.891" width="0.1524" layer="1"/>
+<wire x1="54.529" y1="16.891" x2="63.8" y2="7.62" width="0.1524" layer="1"/>
 </signal>
 <signal name="D8">
 <contactref element="BORON_12PIN_HEADER" pad="4"/>
@@ -2306,8 +2307,8 @@ design rules under a new name.</description>
 <signal name="BJ_VIN">
 <contactref element="J1" pad="1"/>
 <contactref element="S1" pad="2"/>
-<wire x1="71.12" y1="25.4" x2="67.49" y2="29.03" width="0.1524" layer="1"/>
-<wire x1="67.49" y1="29.03" x2="67.49" y2="34.29" width="0.1524" layer="1"/>
+<wire x1="67.49" y1="19.05" x2="67.49" y2="37.01" width="0.1524" layer="1"/>
+<wire x1="67.49" y1="37.01" x2="68.58" y2="38.1" width="0.1524" layer="1"/>
 </signal>
 </signals>
 <mfgpreviewcolors>
