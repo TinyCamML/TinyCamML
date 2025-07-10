@@ -2,21 +2,17 @@
 ## Adding edits by combining senior design teams and EBG's - Liz Farquhar 6/18/2024
 # EBG clean up 7/23/24
 # LF turned off the external pin interrupt 8/1/2024
+# LF changed tl to the ml library and cleaned up unused functions 7/10/2025
 
-import sensor, image, time, utime, pyb, tf, machine, gc, os, uselect
-from pyb import UART, Pin, ExtInt
-from machine import LED
+import sensor, time, pyb, gc, os, uselect, ml
+from pyb import UART
 
 # Set the threshold for detecting dark images
 brightness_threshold = 10  # Adjust this value as needed
 
 #load the TF lite micro file
-net = tf.load('MNv2Flood_cat_Oct2024.tflite', load_to_fb=True)
+net = ml.Model('MNv2Flood_cat_Mar2025.tflite',load_to_fb=True)
 labels = ['Flood', 'NoFlood']
-
-#make directory to save images
-#if not "images" in os.listdir():
-#    os.mkdir("images")  # Make a temp directory
 
 uart = UART(1, 9600) # UART1, adjust baudrate as needed
 
@@ -48,9 +44,9 @@ while(True):
 
     # Check if the image is too dark. if not, classify
     if avg_brightness > brightness_threshold:
-        TF_objs = net.classify(img)
-        Flood = TF_objs[0].output()[0]
-        NoFlood = TF_objs[0].output()[1]
+        TF_objs = net.predict([img])
+        Flood = TF_objs[0][0][0]
+        NoFlood = TF_objs[0][0][1]
         if Flood > NoFlood:
             #print('Flood')
             uart.write('Flood.')
