@@ -6,6 +6,7 @@
 
 import sensor, time, pyb, gc, os, uselect, ml
 from pyb import UART
+from machine import LED
 
 # Set the threshold for detecting dark images
 brightness_threshold = 10  # Adjust this value as needed
